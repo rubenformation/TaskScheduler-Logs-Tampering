@@ -31,7 +31,7 @@ The exploit can also be triggered remotely by patching the author entry in the X
 ```bash
 # Change the original impacket-atexec script with the uploaded script, and run it with the original arguments
 # In order to poison the log with a fake Author entry, change the buffer in the XML file to the desired data. Example: Microsoft Corporation.
-impacket [[domain/]username[:password]@]<targetName or address> command
+impacket-atexec [[domain/]username[:password]@]<targetName or address> command
 ```
 <br>
 

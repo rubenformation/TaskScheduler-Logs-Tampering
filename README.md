@@ -10,7 +10,9 @@ By [Ruben Enkaoua](https://x.com/rubenlabs) and [Cymulate](https://cymulate.com/
 <br>
 Two new Defense Evasion techniques have been discovered.<br><br>
 The first vulnerability is affecting the Task metadatas and the Event Log 4698 "Task Created", allowing an attacker to create a task based on an XML file and poison the "Author" entry to arbitrary data.<br>
+
 The second vulnerability allows to leverage an unlimited allocated buffer in "Author" task metadata, which is handled further by the Windows Event Log, overwriting the whole log description.
+The exploit can also be triggered remotely by patching the author entry in the XML file sent over RPC in [impacket-atexec](https://github.com/fortra/impacket/blob/master/examples/atexec.py).
 <br>
 <br>
 
@@ -19,9 +21,18 @@ The second vulnerability allows to leverage an unlimited allocated buffer in "Au
 
 - Batch Logon rights on the Task Principal for the task to run (Otherwise the metadata / event log is poisoned / overwritten but the task won't run)
 - The password of the task principal, if the user creating the task is not admin or doesn't have SeImpersonate privileges
+- The Security Policy "Audit Other Object Access Events" is enabled
 <br>
 
 #### Command
+<br>
+
+> Remote
+```bash
+# Change the original impacket-atexec script with the uploaded script, and run it with the original arguments
+# In order to poison the log with a fake Author entry, change the buffer in the XML file to the desired data. Example: Microsoft Corporation.
+impacket [[domain/]username[:password]@]<targetName or address> command
+```
 <br>
 
 > Task Poisoning (Metadata / Event Log)

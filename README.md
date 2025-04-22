@@ -44,7 +44,7 @@ schtasks /create /tn poc /xml poc-overflow.xml /ru <username> /rp <password> /f
 <br>
 
 > Log Check
-```powershell
+```bash
 # Check the task log by running the following powershell command. If the <RegistrationInfo> tag is containing a 3500 bytes buffer but not the command executed and the arguments, the target is vulnerable.
 Get-WinEvent -FilterHashtable @{LogName='Security'; Id=4698} | Where-Object { $_.Message -like '*poc*' } |  Select-Object -First 1 | Format-List TimeCreated, Message
 ```
